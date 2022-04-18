@@ -151,6 +151,8 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
 
         else:
             var = True
+            #DIVIDIR RESTRIÇÕES
+            #PROCESSAR INFORMAÇÕES EM CADA DICIONARIO, INFORMAÇÕES FIXAS DEVEM SER PROCESSADAS AQUI, COMO ESTAS LISTAS DE PADS E RECS
 
             #### TESTE DE COLISÃO #### linha 19
 
@@ -164,7 +166,7 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
 
             #CRIANDO A LISTA DE PILHAS RECUPERADAS PELOS RECLAIMEIRS QUE DIVIDEM O MESMO TRILHO
 
-            #1º Precisamos da lista de pads a qual r atual serve
+            #1º Precisamos da lista de pads a qual r atual serve - pensar em usar coomo saída intermediaria, não dentro de uma função
             lista_de_pads_a_qual_r_atual_serve = []
             for p in dic_pad['pads']:  #para cada pad p
                 for rec in dic_pad['reclaimers_pad'][p]: #para recuperador na lista de recuperadores de p
