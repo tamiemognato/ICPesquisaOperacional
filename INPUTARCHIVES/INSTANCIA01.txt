@@ -1,0 +1,22 @@
+#set of ships (str list)
+V = 00, 01, 02, 03
+
+#set of large ships (str list)
+
+VL = []
+
+#set of stockpiles (str list)
+S = 00, 01, 02, 03, 04
+
+#set of stacker streams that service pad p (lista de listas de str)
+Kp = 00, 01; 02, 03
+
+#maximum number of reclaimers that can be in use at one time (number of ship loaders) (int)
+NumMxR = 222
+
+#the number of stockpiles of v (int)
+nv = 1, 1, 2, 1
+
+#total number of coal movements that must be carried out for stockpile s from load point l (lista de listas de int)
+NumMovSL = 1, 5; 5, 0; 0, 3; 2, 0; 1, 0
+

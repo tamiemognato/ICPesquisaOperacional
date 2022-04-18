@@ -1,0 +1,7 @@
+Dic_reclaimer
+
+instance_name         :  01_GCA_ETA_LOCATE_TEST.txt
+reclaimers            :  [0, 1]
+stockpiles_reclaimed  :  [[], []]
+reclaim_schedule      :  [[], []]
+space_of_reclaim_schedule  :  [[], []]

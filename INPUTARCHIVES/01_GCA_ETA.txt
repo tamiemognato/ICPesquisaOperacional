@@ -1,0 +1,116 @@
+#LISTS OF LABELS PARAMETERS - LABELS ALWAYS STARTS WITH 0 - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = 0X, 0Y, 0Z, 0W + ENTER
+
+#set of ships (lista de str)
+V = 0, 1, 2, 3
+
+#set of stockpiles (lista de str)
+S = 0, 1, 2, 3, 4
+
+#set of berths (lista de str)
+B = 0, 1
+
+#set of pads (lista de str)
+P = 0, 1
+
+#set of stacker streams (lista de str)
+K = 0, 1, 2, 3
+
+#set of load points (lista de str)
+L = 0, 1
+
+#set of reclaimers (lista de str)
+R = 0, 1
+
+#LIST OF LISTS OF LABELS PARAMETERS - LABELS ALWAYS STARTS WITH 0 - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = 0X, 0Y; 0Z, 0W + ENTER
+
+#set of stacker streams that service pad p (lista de listas de str)
+Kp = 0, 1; 2, 3
+
+#set of reclaimers that service pad p (lista de listas de str)
+Rp = 0, 1; 0, 1
+
+#set of stockpiles of ship v, given in the order in which they must be reclaimed (lista de listas de str)
+Sv = 0; 1; 2, 3; 4
+
+#set of stockpiles that require at least one coal movement from load point l (lista de listas de str)
+Sl = 0, 1, 3, 4; 0, 2
+
+#set of load points from which stockpile s requires at least one coal movement (lista de listas de str)
+Ls = 0, 1; 0; 1; 0; 0
+
+#LIST OF LISTS OF INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = X, Y; Z, W + ENTER
+
+#total number of coal movements that must be carried out for stockpile s from load point l (lista de listas de int)
+NumMovSL = 1, 5; 5, 0; 0, 3; 2, 0; 1, 0
+
+#load (tonnage) of a coal movement for stockpile s from load point l (lista de listas de int)
+LodTonSL = 10, 20; 10, 0; 0, 10; 10, 0; 40, 0
+
+#LIST OF INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = X, Y, Z + ENTER
+
+#the number of stockpiles of v (int)
+nv = 1, 1, 2, 1
+
+#nomination time of ship v (lista de int)
+NomV = 32, 14, 24, 58
+
+#estimated time of arrival of ship v (lista de int)
+EtaV = 300, 282, 374, 375
+
+#amount of time that must elapse after ship v arrives at a berth before loading can begin (lista de int)
+BufAtlV = 1, 1, 1, 1
+
+#amount of time that must elapse after ship v departs a berth before the next ship can arrive (lista de int)
+BufDtaV = 1, 1, 1, 1
+
+#amount of time that must elapse after ship v has been loaded, before it can depart (lista de int)
+BufLtdV = 1, 1, 1, 1
+
+#length of stockpile s on a pad (lista de int)
+LenS = 500, 500, 400, 300, 200
+
+#amount of time it takes to reclaim stockpile s (lista de int)
+DurRecS = 72, 18, 72, 24, 20
+
+#length of pad p (lista de int)
+LenP = 1000, 1000
+
+#daily capacity, in terms of working hours, of stacker stream k (lista de int)
+CapDurK = 8, 8, 8, 8
+
+#Produtividade t/h
+Prod_Stacker = 5, 5, 5, 5
+
+#number of coal movements that can be accommodated at load point l in one day (lista de int)
+CapMovL = 7, 10
+
+#daily capacity, in terms of tonnage, of load point l (lista de int)
+CapTonL = 50, 200
+
+#buffer distance that must be maintained between adjacent stockpiles on pad p (lista de int)
+BufDisP = 10, 10
+
+#amount of time that elapses when reclaimer r moves from position h to position h' (lista de int)
+DurRhh = 2, 2
+
+#UNIQUE INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = INTEGER NUMBER + ENTER
+
+#maximum number of reclaimers that can be in use at one time (number of ship loaders) (int)
+NumMxR = 2
+
+#parameter that represents a very large number, which in this problem can be read as infinite. It will be an auxiliary parameter to generate TD e TL (int)
+Inf = 99999
+
+#EMPTY PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = [] + ENTER
+
+#set of large ships (lista de str)
+
+VL = []
+
+#set of times representing the start of a day (int) - The parameter will be generated in Python
+
+TD = []
+
+#set of times at which a large ship can depart (float) - The parameter will be generated in Python
+
+TL = []

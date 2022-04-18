@@ -1,0 +1,56 @@
+########EXCLUDE THIS LINE - In order for the program to work correctly, the input files must be written according to the
+########EXCLUDE THIS LINE - following model. Attention, you can see that the parameters are written as lists, we just
+########EXCLUDE THIS LINE - don't use '[]' and to split elements that are lists into lists we use ';'.
+########EXCLUDE THIS LINE -
+#LISTS OF LABELS PARAMETERS - LABELS ALWAYS STARTS WITH 0 - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = 0X, 0Y, 0Z, 0W + ENTER
+
+#comment
+Parameter = 00, 00, 00, 00
+
+#LIST OF LISTS OF LABELS PARAMETERS - LABELS ALWAYS STARTS WITH 0 - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = 0X, 0Y; 0Z, 0W + ENTER
+
+#comment
+Parameter = 00, 00; 01, 01
+
+#LIST OF LISTS OF INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = X, Y; Z, W + ENTER
+
+#comment
+Parameter = 0, 0; 1, 1; 2, 2; 3, 3; 4, 4
+
+#LIST OF INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = X, Y, Z + ENTER
+
+#comment
+Parameter = 0, 0, 0, 0
+
+#UNIQUE INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = INTEGER NUMBER + ENTER
+
+#comment
+Parameter = 0
+
+#EMPTY PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = [] + ENTER
+
+#comment
+
+Parameter = []
+
+###############
+
+
+#Atualizar dic_berth com informações de tempo e navios - no secdics
+#= [-1]
+#=[[][][][]] trocar esse -1 por listas vazias.
+#Melhor ter uma lista de tempo de chegadas e outra de tempo de partidas ou ter essas duas e ter uma terceira de tempo de chegada
+#e tempo de partida do mesmo navio?
+
+
+#1# Fazer Read Me e colocar mensagem no main para o usuário, poucas
+#2# Revisar comentários funções e laços, ver se esqueceu algum das funções, última do secdics
+
+# V = ordena_navios(dic_ship) #V recebe uma lista de tuplas ("rótulo", ETA) ordenados pelo ETA
+# for v in V:
+    navio_corrente = lê_navio_dicionario(dic_ship,v)
+    best_berth = -1
+    min_time_arr = dic_instance('infinite')
+    for b in dic_stockpile('stockpiles')
+        berco_corrente = lê_berco_dicionario(dic_stockpile,b)
+        time_arr = first_avb_time_b(navio_corrente)

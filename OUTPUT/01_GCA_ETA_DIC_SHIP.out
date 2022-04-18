@@ -1,0 +1,12 @@
+Dic_ship
+
+instance_name            :  01_GCA_ETA.txt
+ships                    :  [0, 1, 2, 3]
+eta_ship                 :  [300, 282, 374, 375]
+total_stockpiles_ship    :  [1, 1, 2, 1]
+order_stockpiles_ship    :  [[0], [1], [2, 3], [4]]
+nomination_ship          :  [32, 14, 24, 58]
+berth_assigned           :  [-1, -1, -1, -1]
+arrival_time_berth       :  [-1, -1, -1, -1]
+time_departure           :  [-1, -1, -1, -1]
+time_rec_last_stockpile  :  [-1, -1, -1, -1]

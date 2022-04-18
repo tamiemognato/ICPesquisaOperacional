@@ -1,0 +1,9 @@
+Dic_stacker_stream
+
+instance_name            :  01_GCA_ETA_LOCATE_TEST.txt
+stacker_streams          :  [0, 1, 2, 3]
+daily_cap_hours_stacker  :  [8, 8, 8, 8]
+stockpiles_pad_serviced  :  [[], [], [], []]
+res_cap_hours_stacker    :  [[], [], [], []]
+t_scheduled_stacking     :  [[], [], [], []]
+productivity             :  [5, 5, 5, 5]

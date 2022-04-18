@@ -1,0 +1,2 @@
+#set of pads (lista de str)
+P = 00, 02
