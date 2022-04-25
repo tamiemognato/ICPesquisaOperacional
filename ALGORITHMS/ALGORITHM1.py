@@ -276,7 +276,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
         + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
         )
-    #print(graph_reclaimers)
+    print(graph_reclaimers)
 
     ##############################################    STOCKPILES    ####################################################
     lista_dic_stockpile_pad_0 = []
