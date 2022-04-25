@@ -3,12 +3,12 @@ def set_of_stockpiles_that_finish_being_reclaimed_by_r_after_early_time(r, early
     list_of_s_finish_reclaim_by_r_after_early_time = []
 
     stockpiles_reclaimed_by_r = dic_reclaimer['stockpiles_reclaimed'][r]                                                #Seleciono as stockpiles que r atende
-    print('LINE G6: ', stockpiles_reclaimed_by_r)
+    #print('LINE G6: ', stockpiles_reclaimed_by_r)
     if len(stockpiles_reclaimed_by_r) != 0:
-        print('oi')
+        #print('oi')
         for s in stockpiles_reclaimed_by_r:
-            print('dic_stockpile[time_rec_finish][s]: ', dic_stockpile['time_rec_finish'][s])
-            print('LINE 11 early time: ', early_time)
+            #print('dic_stockpile[time_rec_finish][s]: ', dic_stockpile['time_rec_finish'][s])
+            #print('LINE 11 early time: ', early_time)
             if dic_stockpile['time_rec_finish'][s] >= early_time:                                                        #comparo se o tempo que elas terminam de serem recuperadas é maior (ou igual) que o early_time
                 list_of_s_finish_reclaim_by_r_after_early_time.append(s)
 
@@ -90,10 +90,10 @@ def reclaim_s_using_r_during_ab_avoiding_clashes_respecting_nummxr(dic_reclaimer
 
 
 def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance, R_s_s_p, dic_pad):
-    print('LINE G93 r: ', r)
+    #print('LINE G93 r: ', r)
     S = set_of_stockpiles_that_finish_being_reclaimed_by_r_after_early_time(r, early_time, dic_reclaimer, dic_stockpile)   #SAÍDA OK
     #LINHA 2 - FAZER NO FINAL, N SERÁ ÚTIL PARA ESSA INSTÂNCIA TESTE
-    print('LINE G96 S: ', S)
+    #print('LINE G96 S: ', S)
 
     #Daqui vou seguir 2 caminhos: 1 para a lista vazia em que fazemos a linha 7 e 19 e outro para lista não vazia que fazemos o procedimento inteiro
 
@@ -101,7 +101,7 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
     if len(S) == 0:
         #reclaim_schedule = (early_time, early_time + dic_stockpile['time_reclaim_stockpile'][s])
         interval_a_b = (early_time, dic_instance['infinite'])    #linha 7 para lista n vazia
-        print('LINE G103 Reclaim_schedule lista vazia: ', interval_a_b)
+        #print('LINE G103 Reclaim_schedule lista vazia: ', interval_a_b)
 
         #INSERIR TESTES DE COLISÃO, QNT R MAX - vou precisar de b definido, não 999
 
@@ -112,16 +112,16 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
 
     #LISTA NÃO VAZIA
     else:
-        print('LINE G112 S != []')
+        #print('LINE G112 S != []')
         if dic_stockpile['time_rec_start'][S[0]]<= early_time:
-            print('LINE G114 dic_stockpile[time_rec_start][S[0]]<= early_time: ', dic_stockpile['time_rec_start'][S[0]], ' <= ', early_time)
+            #print('LINE G114 dic_stockpile[time_rec_start][S[0]]<= early_time: ', dic_stockpile['time_rec_start'][S[0]], ' <= ', early_time)
             early_time = dic_stockpile['time_rec_finish'][S[0]] + dic_instance['time_reclaimer_moves'][r]
-            print('LINE G116 EARLY_TIME: ', early_time)
+            #print('LINE G116 EARLY_TIME: ', early_time)
             S = S[1:]
-            print('LINE G118 S: ', S)
+            #print('LINE G118 S: ', S)
 
         interval_a_b = interval_ab(early_time, dic_instance)  #linha 7
-        print('LINE G121 INTERVAL_A_B: ', interval_a_b)
+        #print('LINE G121 INTERVAL_A_B: ', interval_a_b)
 
         if S != []:
             print('LINE G124 S != []')
@@ -173,7 +173,7 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
                     if r == rec: #se r atual for igual a ele
                         lista_de_pads_a_qual_r_atual_serve.append(p) #então adicione o pad a lista de pads a qual r atual serve
 
-            print('LINE 171 lista_de_pads_a_qual_r_atual_serve: ', lista_de_pads_a_qual_r_atual_serve)
+            #print('LINE 171 lista_de_pads_a_qual_r_atual_serve: ', lista_de_pads_a_qual_r_atual_serve)
 
             #2º Precisamos da lista de reclaimers que também servem a esse pad
             lista_de_rec_que_também_servem_a_esses_pads = []
@@ -181,7 +181,7 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
                 for rec in dic_pad['reclaimers_pad'][p]: #para cada reclaimer que serve a cada um desses pads
                     if rec not in lista_de_rec_que_também_servem_a_esses_pads: #se ele já não estiver adicionado na lista
                         lista_de_rec_que_também_servem_a_esses_pads.append(rec)  #adiciono ele a lista de reclaimer que também servem aos padas que r atual serve
-            print('LINE 179 lista_de_rec_que_também_servem_a_esses_pads: ', lista_de_rec_que_também_servem_a_esses_pads)
+            #print('LINE 179 lista_de_rec_que_também_servem_a_esses_pads: ', lista_de_rec_que_também_servem_a_esses_pads)
 
             #3º Agora podemos testar os gaps de tempos, a ou b está em [a', b']?
                 # E o testar os gaps de espaços, c ou d está em [c', d']?
@@ -223,17 +223,17 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
             #### RETORNANDO ####
 
             if var == True:
-                print('VAR TRUE, int a_b: ', interval_a_b)
+                #print('VAR TRUE, int a_b: ', interval_a_b)
                 return interval_a_b
             else:
                 interval_a_b[0] = dic_instance['infinite']  #se n for possivel usar o gap ab, então retorno a como infinito, pois não passará na linha 10 do proc 3
-                print('VAR FALSE, int a_b: ', interval_a_b)
+                #print('VAR FALSE, int a_b: ', interval_a_b)
                 return interval_a_b
 
 
 
             #reclaim_s_using_r_during_ab_avoiding_clashes_respecting_nummxr(dic_reclaimer, dic_instance, a, b, r, R_s_s_p, s, dic_stockpile)
-            print('TESTES')
+            #print('TESTES')
 
 
         #SE OS TESTES INDICAREM QUE NÃO PODEMOS USAR R, RETORNAR EARLY_TIME = DIC_INSTANCE['INFINITE'] PORQUE ELE NAO VAI PASSAR NO TESTE DO PROC 3

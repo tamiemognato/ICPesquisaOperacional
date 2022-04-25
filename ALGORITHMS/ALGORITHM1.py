@@ -1,5 +1,14 @@
 import copy
+import os
 import sys
+import pandas as pd
+from plotly.offline import plot
+import plotly.graph_objs as go
+import plotly.figure_factory as ff
+import plotly.express as px
+import plotnine
+import pandas as pd
+from plotnine import *
 
 sys.path.append('FUNCTIONS')
 
@@ -148,31 +157,197 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
             #ESTOU SEGUINDO COM A PROGRAMAÇÃO PARA VOLTAR NA QUESTÃO DO TEMPO APENAS NA HORA DE FAZER O DESLOCAMENTO PARA NÃO FICAR PRESA
 
-        print("\n\n\nout of for s\n\n\n") #SAINDO DO FOR S
+        # print("\n\n\nout of for s\n\n\n") #SAINDO DO FOR S
+        #
+        # print('DIC_SHIP_ATUALIZADO:', dic_ship)
+        # print('DIC_STOCKPILE_ATUALIZADO:', dic_stockpile)
+        # print('DIC_LOAD_POINT_ATUALIZADO:', dic_load_point)
+        # print('DIC_RECLAIMER: ', dic_reclaimer)
+        # print('DIC_PAD: ', dic_pad)
+        # print('CURRENT_SHIP: ', current_ship)
 
-        print('DIC_SHIP_ATUALIZADO:', dic_ship)
-        print('DIC_STOCKPILE_ATUALIZADO:', dic_stockpile)
-        print('DIC_LOAD_POINT_ATUALIZADO:', dic_load_point)
-        print('DIC_RECLAIMER: ', dic_reclaimer)
-        print('DIC_PAD: ', dic_pad)
-        print('CURRENT_SHIP: ', current_ship)
-
-        print('########################################################################################################')
+        #print('########################################################################################################')
 
         returning_time_build_s_finish(current_ship, dic_stockpile)      #SAÍDAS TODAS OK                                                 #Gerando T(lst)s - time at whic building of stockpile s finishes
 
-        print('DIC_STOCKPILE_ATUALIZADO:', dic_stockpile)
-
-        print('\n **************** SET_RECLAIM_SCHEDULE **************** \n')
+        # print('DIC_STOCKPILE_ATUALIZADO:', dic_stockpile)
+        #
+        # print('\n **************** SET_RECLAIM_SCHEDULE **************** \n')
         proc3_em_teste = SET_RECLAIM_SCHEDULE(current_ship, dic_stockpile, dic_instance, dic_pad, dic_reclaimer, dic_ship)
 
+        #LINHAS NAVIOS GRANDES
+
+        # print('\n dic_ship: ', dic_ship)
+        # print('CURRENT_SHIP: ', current_ship)
+        # print('CURRENT_SHIP DEPARTURE TIME: ', current_ship['time_departure'])
+        dic_ship['time_departure'][v[0]] = dic_ship['time_rec_last_stockpile'][v[0]] + dic_instance['time_elapse_load_depart'][v[0]]
+        # print(dic_ship['time_rec_last_stockpile'][v[0]])
+        # print(dic_instance['time_elapse_load_depart'][v[0]])
+        # print('dic_ship: ', dic_ship)
 
 
 
 
 
 
+    print('-------DICIONARIOS ATUALIZADOS--------\n')
+
+    #print('DIC_BERTH: ', dic_berth)
+    # print('DIC_SHIP:', dic_ship)
+    print('DIC_STOCKPILE:', dic_stockpile)
+    # print('DIC_PAD: ', dic_pad)
+    # print('DIC_LOAD_POINT:', dic_load_point)
+    # print('DIC_STACKER_STREAM: ', dic_stacker_stream)
+    #print('DIC_RECLAIMER: ', dic_reclaimer)
+
+    print('\n----------------end-----------------')
+
+    #função com entrada de dicionários com listas e saída de uma lista com vários dicionários
+    #aplicando ao dic_berth primeiramente
+    #ENTRADA - DIC_BERTH: {'instance_name': '01_GCA_ETA_LOCATE_TEST.txt', 'berths': [0, 1], 'ships_scheduled': [[1, 2], [0]],
+                #'arrival_time_berth': [[282, 374], [300]], 'time_departure': [[303, 404], [374]]}
+    #SAÍDA - lista_dic_berth = [{'berths' : 0 , 'ships_scheduled' : 1 ...},
+                            #   {'berths' : 0 , 'ships_scheduled' : 2 ...},
+                            #   {'berths' : 1 , 'ships_scheduled' : 0 ...}]
+
+    lista_dic_berth = []
+    lista_chaves_dic_berth = ['berths', 'ships_scheduled', 'arrival_time_berth', 'time_departure']
+    for b in dic_berth['berths']: #para cada berço
+        count = 0
+        while count < len(dic_berth['ships_scheduled'][b]): #dar o laço para o número de dados nas listas dos respectivos berços
+
+            dic_aux = {}
+            dic_aux = dict(berths = dic_berth['berths'][b], ships_scheduled = dic_berth['ships_scheduled'][b][count], arrival_time_berth = dic_berth['arrival_time_berth'][b][count], time_departure = dic_berth['time_departure'][b][count])
+
+            lista_dic_berth.append(dic_aux)
+
+            count += 1
+
+    #print(lista_dic_berth)
+
+    df_b = pd.DataFrame(lista_dic_berth)
+    #df = df.transpose()
+    #print(df_b)
+
+    # GANTT DOS BERÇOS - ok
+    # Berth to wichi ship v is assigned + time of arrival of ship v at berth bv
+    # + time of departure of ship v from berth bv
+
+    graph_berths = (
+        ggplot(data = df_b)
+        + geom_segment(aes(x='arrival_time_berth', y='berths', xend='time_departure', yend='berths'))
+        + aes(size = 10, color = "ships_scheduled")
+        + geom_label(aes(label = "arrival_time_berth",  x = "arrival_time_berth", y = "berths", size = 10))
+        + geom_label(aes(label="time_departure", x="time_departure", y="berths", size=10))
+        + labs(title = 'Berths schedule', x = "Time", y = 'Berths')
+
+        )
+
+    print(graph_berths)
+
+    ###############################################   RECLAIMERES   ####################################################
+    lista_dic_reclaimer = []
+    for r in dic_reclaimer['reclaimers']:
+        count = 0
+        while count < len(dic_reclaimer['stockpiles_reclaimed'][r]):
+
+            dic_aux = {}
+            dic_aux = dict(reclaimers = dic_reclaimer['reclaimers'][r], stockpiles_reclaimed = dic_reclaimer['stockpiles_reclaimed'][r][count], reclaim_start = dic_reclaimer['reclaim_schedule'][r][count][0], reclaim_finish = dic_reclaimer['reclaim_schedule'][r][count][1])
+
+            lista_dic_reclaimer.append(dic_aux)
+
+            count += 1
+
+    #print(lista_dic_reclaimer)
+
+    df_r = pd.DataFrame(lista_dic_reclaimer)
+    #df = df.transpose()
+    #print(df_r)
+
+    # GANTT DOS RECLAIMERS
+    # Reclaimer used in reclaiming stockpile s + time at wich reclaiming pf stockpile s starts
+    # + time at which reclaiming of stockpile s finishes
+
+    graph_reclaimers = (
+        ggplot(data = df_r)
+        + geom_segment(aes(x='reclaim_start', y='reclaimers', xend='reclaim_finish', yend='reclaimers'))
+        + aes(size = 10, color = "stockpiles_reclaimed")
+        + geom_label(aes(label = "reclaim_start",  x = "reclaim_start", y = "reclaimers", size = 10))
+        + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
+        + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
+        )
+    #print(graph_reclaimers)
+
+    ##############################################    STOCKPILES    ####################################################
+    lista_dic_stockpile_pad_0 = []
+    lista_dic_stockpile_pad_1 = []
+
+    for s in dic_stockpile['stockpiles']:
+            dic_aux = {}
+            dic_aux = dict(stockpiles = dic_stockpile['stockpiles'][s],
+                           pad_assembled = dic_stockpile['pad_assembled'][s],
+                           position_pad_start = dic_stockpile['position_pad'][s],
+                           position_pad_finish = dic_stockpile['position_pad'][s] + dic_stockpile['length_stockpile'][s],
+                           time_build_start = dic_stockpile['time_build_start'][s],
+                           time_build_finish = dic_stockpile['time_build_finish'][s],
+                           time_rec_start = dic_stockpile['time_rec_start'][s],
+                           time_rec_finish = dic_stockpile['time_rec_finish'][s],
+                           stockpile_label_x = (dic_stockpile['time_build_start'][s] + dic_stockpile['time_rec_finish'][s])/2,
+                           stockpile_label_y = (dic_stockpile['position_pad'][s] + dic_stockpile['position_pad'][s] + dic_stockpile['length_stockpile'][s])/2
+                           )
+
+            if dic_stockpile['pad_assembled'][s] == 0:
+                lista_dic_stockpile_pad_0.append(dic_aux)
+            else:
+                lista_dic_stockpile_pad_1.append(dic_aux)
+
+    print(lista_dic_stockpile_pad_0)
+    print(lista_dic_stockpile_pad_1)
 
 
-    print('-------end--------')
-    #TRATAR DICIONÁRIO DE TEMPOS
+    df_s_pad_0 = pd.DataFrame(lista_dic_stockpile_pad_0)
+    #df = df.transpose()
+    print(df_s_pad_0)
+
+    df_s_pad_1 = pd.DataFrame(lista_dic_stockpile_pad_1)
+    #df = df.transpose()
+    print(df_s_pad_1)
+
+    # GANTT DOS PADS x STOCKPILES
+    # Pad on which stockpile s is assembled + position of stockpile s on its pad + number of coal movements carried out for stockpile s from load point l at time t
+    # + time at which building of stockpile s starts + time at which reclaiming of stockpile s finishes
+
+    graph_stockpiles_pad_0 = (
+        ggplot(data = df_s_pad_0)
+
+        + geom_rect(aes(xmin = "time_build_start", xmax = "time_rec_finish", ymin = "position_pad_start", ymax = "position_pad_finish", fill = "stockpiles"))
+        + labs(title = "PAD 0", x = "Time", y = "Pad occupation")
+        + scale_fill_continuous(guide = guide_legend())
+        + geom_label(aes(label="stockpiles", x="stockpile_label_x", y="stockpile_label_y", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_build_start", x="time_build_start", y="position_pad_start", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_build_finish", x="time_build_finish", y="position_pad_start", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_rec_start", x="time_rec_start", y="position_pad_start", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_rec_finish", x="time_rec_finish", y="position_pad_start", size=10, color="stockpiles"))
+    )
+    print(graph_stockpiles_pad_0)
+
+    graph_stockpiles_pad_1 = (
+        ggplot(data = df_s_pad_1)
+
+        + geom_rect(aes(xmin = "time_build_start", xmax = "time_rec_finish", ymin = "position_pad_start", ymax = "position_pad_finish", fill = "stockpiles"))
+        + labs(title = "PAD 1", x = "Time", y = "Pad occupation")
+        + scale_fill_continuous(guide = guide_legend())
+        + geom_label(aes(label = "stockpiles",  x = "stockpile_label_x", y = "stockpile_label_y", size = 10, color = "stockpiles" ))
+        + geom_label(aes(label="time_build_start", x="time_build_start", y="position_pad_start", size=10, color ="stockpiles"))
+        + geom_label(aes(label="time_build_finish", x="time_build_finish", y="position_pad_start", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_rec_start", x="time_rec_start", y="position_pad_start", size=10, color="stockpiles"))
+        + geom_label(aes(label="time_rec_finish", x="time_rec_finish", y="position_pad_start", size=10, color="stockpiles"))
+
+    )
+    print(graph_stockpiles_pad_1)
+
+    os.chdir("OUTPUT")
+    ggsave(plot=graph_berths, filename='berths_schedule')
+    ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
+    ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
+    ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')

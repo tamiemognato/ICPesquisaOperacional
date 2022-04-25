@@ -89,42 +89,14 @@ OutPut = ALGORITHM1(dic_ship,dic_instance,dic_berth,dic_stockpile,dic_pad,dic_lo
 #Dic_Ship, Dic_Berth, Dic_Pad, etc...)
 
 
-# listaaa = []
-# for i in listaaa:
-#     variavel = 0
-#     variavel = 2*i
-#
-# print(variavel)
-# print('end')
-
-# dic_test = {
-#     'teste': [[0], [2]]
-#             }
-#
-# del(dic_test['teste'][0][0])
-# print(dic_test['teste'])
-
-# lista = [0,3,4,5,66]
-#
-# lista2 = lista[:-1]
-# print(lista2)
-
-# for i in [1,2,3]:
-#     print(i)
 
 
 
-# letter = ["W","A"]
-# for i in letter:
-#     if i == 'B':
-#         print("letter is B")
-#
-#     elif i == "C":
-#         print("letter is C")
-#
-#     elif i == "A":
-#         print("letter is A")
-#
-#     else:
-#         print("letter isn't A, B or C")
+
+
+
+
+
+
+
 
