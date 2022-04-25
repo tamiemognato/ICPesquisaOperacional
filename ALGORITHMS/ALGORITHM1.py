@@ -196,7 +196,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     # print('DIC_SHIP:', dic_ship)
     print('DIC_STOCKPILE:', dic_stockpile)
     # print('DIC_PAD: ', dic_pad)
-    # print('DIC_LOAD_POINT:', dic_load_point)
+    print('DIC_LOAD_POINT:', dic_load_point)
     # print('DIC_STACKER_STREAM: ', dic_stacker_stream)
     #print('DIC_RECLAIMER: ', dic_reclaimer)
 
@@ -226,7 +226,6 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     #print(lista_dic_berth)
 
     df_b = pd.DataFrame(lista_dic_berth)
-    #df = df.transpose()
     #print(df_b)
 
     # GANTT DOS BERÇOS - ok
@@ -261,7 +260,6 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     #print(lista_dic_reclaimer)
 
     df_r = pd.DataFrame(lista_dic_reclaimer)
-    #df = df.transpose()
     #print(df_r)
 
     # GANTT DOS RECLAIMERS
@@ -281,6 +279,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     ##############################################    STOCKPILES    ####################################################
     lista_dic_stockpile_pad_0 = []
     lista_dic_stockpile_pad_1 = []
+    list_dic_load_point = []
 
     for s in dic_stockpile['stockpiles']:
             dic_aux = {}
@@ -301,17 +300,30 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
             else:
                 lista_dic_stockpile_pad_1.append(dic_aux)
 
+    for l in dic_load_point['load_points']:
+        count = 0
+        while count < len(dic_load_point['n_coalmov_stockpile_time'][l]):
+            dic_aux = {}
+            dic_aux = dict( load_point = dic_load_point['load_points'][l],
+                            n_coalmov = dic_load_point['n_coalmov_stockpile_time'][l][count][1],
+                            time_n_coalmov = dic_load_point['n_coalmov_stockpile_time'][l][count][4]
+                            )
+            list_dic_load_point.append(dic_aux)
+            count += 1
+
+
     print(lista_dic_stockpile_pad_0)
     print(lista_dic_stockpile_pad_1)
-
+    print(list_dic_load_point)
 
     df_s_pad_0 = pd.DataFrame(lista_dic_stockpile_pad_0)
-    #df = df.transpose()
     print(df_s_pad_0)
 
     df_s_pad_1 = pd.DataFrame(lista_dic_stockpile_pad_1)
-    #df = df.transpose()
     print(df_s_pad_1)
+
+    df_lp = pd.DataFrame(list_dic_load_point)
+    print(df_lp)
 
     # GANTT DOS PADS x STOCKPILES
     # Pad on which stockpile s is assembled + position of stockpile s on its pad + number of coal movements carried out for stockpile s from load point l at time t
@@ -328,6 +340,8 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         + geom_label(aes(label="time_build_finish", x="time_build_finish", y="position_pad_start", size=10, color="stockpiles"))
         + geom_label(aes(label="time_rec_start", x="time_rec_start", y="position_pad_start", size=10, color="stockpiles"))
         + geom_label(aes(label="time_rec_finish", x="time_rec_finish", y="position_pad_start", size=10, color="stockpiles"))
+        #+ geom_label(aes(label="n_coalmov", x="time_n_coalmov", y="position_pad_finish", size=10, color="load_point"))
+
     )
     print(graph_stockpiles_pad_0)
 
@@ -351,3 +365,6 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
     ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
     ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
+
+
+#(stockpile, nº mov, load point, k em serviço, tempo)
