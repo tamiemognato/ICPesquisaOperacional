@@ -142,6 +142,8 @@ def SCHEDULE_COAL_MOVEMENTS(dic_load_point, current_stockpile, dic_stacker_strea
 
                     dic_stacker_stream['res_cap_hours_stacker'][k].append(cap_res_dur)                            #adiciono o residual de mov
 
+                    dic_stacker_stream['stockpiles_pad_serviced'][k].append(current_stockpile['stockpiles'])
+
                     #print('LINE 143 CAP_RES_DUR, dic_stacker_stream[res_cap_hours_stacker][k]: ', cap_res_dur, dic_stacker_stream['res_cap_hours_stacker'][k])
                 else:
                     posicao_k = dic_stacker_stream['t_scheduled_stacking'][k].index(t_res_min)                    #pego a posicao desse t

@@ -192,13 +192,14 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
     print('-------DICIONARIOS ATUALIZADOS--------\n')
 
-    #print('DIC_BERTH: ', dic_berth)
-    # print('DIC_SHIP:', dic_ship)
+    print('DIC_BERTH: ', dic_berth)
+    print('DIC_SHIP:', dic_ship)
     print('DIC_STOCKPILE:', dic_stockpile)
-    # print('DIC_PAD: ', dic_pad)
+    print('DIC_PAD: ', dic_pad)
     print('DIC_LOAD_POINT:', dic_load_point)
-    # print('DIC_STACKER_STREAM: ', dic_stacker_stream)
-    #print('DIC_RECLAIMER: ', dic_reclaimer)
+    print('DIC_STACKER_STREAM: ', dic_stacker_stream)
+    print('DIC_RECLAIMER: ', dic_reclaimer)
+
 
     print('\n----------------end-----------------')
 
@@ -242,7 +243,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
         )
 
-    print(graph_berths)
+    #print(graph_berths)
 
     ###############################################   RECLAIMERES   ####################################################
     lista_dic_reclaimer = []
@@ -274,9 +275,44 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
         + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
         )
-    print(graph_reclaimers)
+    #print(graph_reclaimers)
 
-    ##############################################    STOCKPILES    ####################################################
+    ###############################################   STACKERS   #######################################################
+
+    lista_dic_stacker = []
+    for stk in dic_stacker_stream['stacker_streams']:
+        count = 0
+        while count < len(dic_stacker_stream['stockpiles_pad_serviced'][stk]):
+            dic_aux = {}
+            dic_aux = dict(stacker_streams=dic_stacker_stream['stacker_streams'][stk],
+                           stockpiles_pad_serviced=dic_stacker_stream['stockpiles_pad_serviced'][stk][count],
+                           res_cap_hours_stacker=dic_stacker_stream['res_cap_hours_stacker'][stk][count],
+                           t_scheduled_stacking=dic_stacker_stream['t_scheduled_stacking'][stk][count])
+
+            lista_dic_stacker.append(dic_aux)
+
+            count += 1
+
+    #print(lista_dic_stacker)
+
+    df_stk = pd.DataFrame(lista_dic_stacker)
+    print(df_stk)
+
+    graph_stackers = (
+        ggplot(data = df_stk)
+        +geom_bar(aes(x = 't_scheduled_stacking', y = 'res_cap_hours_stacker', fill = 'stacker_streams'), stat = 'identity', width = 5, position=position_dodge2(preserve = "single"))
+        #+geom_point(aes(x = 't_scheduled_stacking', y = 'res_cap_hours_stacker'))
+        +geom_label(aes(label = 'res_cap_hours_stacker', x = 't_scheduled_stacking', y = 'res_cap_hours_stacker', color = 'stacker_streams'))
+        #+ aes(x = 'stacker_streams', y= 't_scheduled_stacking')
+        #+ geom_line(aes(linetype = 'stackeDr_streams', color = 'stacker_streams'))
+        # + geom_label(aes(label = "reclaim_start",  x = "reclaim_start", y = "reclaimers", size = 10))
+        # + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
+        # + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
+        ) #mostrar todos os valores no eixo x
+
+    print(graph_stackers)
+
+    ##############################################    STOCKPILES, PADS, LPS    #########################################
     lista_dic_stockpile_pad_0 = []
     lista_dic_stockpile_pad_1 = []
     list_dic_load_point = []
@@ -312,18 +348,18 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
             count += 1
 
 
-    print(lista_dic_stockpile_pad_0)
-    print(lista_dic_stockpile_pad_1)
-    print(list_dic_load_point)
+    # print(lista_dic_stockpile_pad_0)
+    # print(lista_dic_stockpile_pad_1)
+    # print(list_dic_load_point)
 
     df_s_pad_0 = pd.DataFrame(lista_dic_stockpile_pad_0)
-    print(df_s_pad_0)
+    # print(df_s_pad_0)
 
     df_s_pad_1 = pd.DataFrame(lista_dic_stockpile_pad_1)
-    print(df_s_pad_1)
+    # print(df_s_pad_1)
 
     df_lp = pd.DataFrame(list_dic_load_point)
-    print(df_lp)
+    # print(df_lp)
 
     # GANTT DOS PADS x STOCKPILES
     # Pad on which stockpile s is assembled + position of stockpile s on its pad + number of coal movements carried out for stockpile s from load point l at time t
@@ -343,7 +379,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         #+ geom_label(aes(label="n_coalmov", x="time_n_coalmov", y="position_pad_finish", size=10, color="load_point"))
 
     )
-    print(graph_stockpiles_pad_0)
+    #print(graph_stockpiles_pad_0)
 
     graph_stockpiles_pad_1 = (
         ggplot(data = df_s_pad_1)
@@ -358,7 +394,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         + geom_label(aes(label="time_rec_finish", x="time_rec_finish", y="position_pad_start", size=10, color="stockpiles"))
 
     )
-    print(graph_stockpiles_pad_1)
+    #print(graph_stockpiles_pad_1)
 
     os.chdir("OUTPUT")
     ggsave(plot=graph_berths, filename='berths_schedule')
