@@ -88,6 +88,20 @@ os.chdir("..") #INPUTRUN > GRANELTM
 OutPut = ALGORITHM1(dic_ship,dic_instance,dic_berth,dic_stockpile,dic_pad,dic_load_point, dic_stacker_stream, dic_reclaimer)
 #Dic_Ship, Dic_Berth, Dic_Pad, etc...)
 
+print("Agora do scrip principal:")
+
+print('-------DICIONARIOS ATUALIZADOS--------\n')
+
+print('DIC_BERTH: ', dic_berth)
+print('DIC_SHIP:', dic_ship)
+print('DIC_STOCKPILE:', dic_stockpile)
+print('DIC_PAD: ', dic_pad)
+print('DIC_LOAD_POINT:', dic_load_point)
+print('DIC_STACKER_STREAM: ', dic_stacker_stream)
+print('DIC_RECLAIMER: ', dic_reclaimer)
+
+print('\n----------------end-----------------')
+
 
 
 
