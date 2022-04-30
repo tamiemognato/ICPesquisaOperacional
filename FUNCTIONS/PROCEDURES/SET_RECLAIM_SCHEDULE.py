@@ -37,9 +37,14 @@ def reclaimers_serving_the_ships_stockpile_pad(current_ship, i, dic_stockpile, d
 
     return R_s_s_p
 
+def initial_position_reclaimers():
 
 
 
+
+
+
+    return
 ########################################################################################################################
 #VÁRIAVEIS
 #'time_elapse_arrive_load': {},  # 'BufAtlV'     # amount of time that must elapse after ship v arrives at a berth before loading can begin (lista de int)
@@ -48,17 +53,12 @@ def reclaimers_serving_the_ships_stockpile_pad(current_ship, i, dic_stockpile, d
 #'total_stockpiles_ship'         : {}, # 'nv'          # the number of stockpiles of v (int)
 #'time_reclaimer_moves'          : {}, # 'DurRhh'      # amount of time that elapses when reclaimer r moves from position h to position h' (lista de int)
 
-
-
-
-
-
 def SET_RECLAIM_SCHEDULE(current_ship, dic_stockpile, dic_instance, dic_pad, dic_reclaimer, dic_ship):
     time_build_finish_of_last_s_of_v = returning_time_build_last_s_finish(current_ship, dic_stockpile)
-    #print('LINE 58 time_build_finish_of_last_s_of_v:' , time_build_finish_of_last_s_of_v)
+    #print('LINE 58: ', current_ship)
     time_v_is_ready_to_reclaim = current_ship['arrival_time_berth'] + dic_instance['time_elapse_arrive_load'][current_ship['ships']]       #!!!!! COLOCAR ISTO NO DIC SHIP
     early_time = max(time_build_finish_of_last_s_of_v,time_v_is_ready_to_reclaim)          #TODOS OK, EXCETO: ETA DO NAVIO 2 ESTÁ ERRADO, PASSEI ERRADO NA ENTRADA, VOU FINALIZAR COM ESSE VALOR.                                                  #PROCEDIMENTO 3 LINHA 1
-    #print('LINE 61 EARLY_TIME: ', early_time)
+    #print('time_build_finish_of_last_s_of_v: ', time_build_finish_of_last_s_of_v, '\ntime_v_is_ready_to_reclaim: ', time_v_is_ready_to_reclaim,'\nLINE 61 EARLY_TIME: ', early_time)
 
     list_i = generating_i_loop_list(current_ship['total_stockpiles_ship'])
     #print('LINE 64 LIST_I: ', list_i)

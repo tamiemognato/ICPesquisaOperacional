@@ -62,7 +62,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     #print(dic_ship['order_stockpiles_ship'])
     #print(S_sorted)
     #dic_ship['time_departure'] = [374,303,404,397]                                                                      ##simulando tempos de partidas dos navios
-    dic_ship['time_departure'] = [374,303,404]                                                                      ##simulando tempos de partidas dos navios
+    #dic_ship['time_departure'] = [374,303,404]                                                                      ##simulando tempos de partidas dos navios
 
     for v in V:
         #print(v[0])
@@ -71,7 +71,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
         best_berth = -1
         min_time_arr = dic_instance['infinite']
-
+        #print(dic_berth)
         for b in dic_berth['berths']:
             current_berth = select_current_entity(dic_berth,b)                                                          #Copying to a new dictionary the informations only of the current berth
             #print('\nLINE 34 current_berth: ', current_berth)
@@ -96,7 +96,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         #print('\nLINE 53 best_current_berth: ', best_current_berth)
         best_current_berth['ships_scheduled'].append(v[0])
         best_current_berth['arrival_time_berth'].append(min_time_arr)
-        best_current_berth['time_departure'].append(current_ship['time_departure'])                                     ##essa linha deixará de existir quando chegar na  linha 28 - ou manter ela aqui, adicionar um numero do tipo -1 e lá no final só acessar a posicao e substituir
+        #best_current_berth['time_departure'].append(current_ship['time_departure'])                                     ##essa linha deixará de existir quando chegar na  linha 28 - ou manter ela aqui, adicionar um numero do tipo -1 e lá no final só acessar a posicao e substituir
         #print('\nLINE 57 best_current_berth: ', best_current_berth)
 
         #print('\nLINE 59 dic_berth: ', dic_berth)
@@ -187,6 +187,8 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         # print(dic_instance['time_elapse_load_depart'][v[0]])
         # print('dic_ship: ', dic_ship)
 
+        dic_berth['time_departure'][dic_ship['berth_assigned'][v[0]]].append(dic_ship['time_departure'][v[0]])
+
 
 
 
@@ -205,7 +207,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
     print('\n----------------end-----------------')
 
-    generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer)
+    #generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer)
 
 
     return dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer

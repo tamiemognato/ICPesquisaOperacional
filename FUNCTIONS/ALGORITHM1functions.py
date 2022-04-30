@@ -55,11 +55,11 @@ def saving_value_in_dic_berth(dic_berth,current_berth):
     if aux_current_berth['berths'] == 0:
         aux_actualized_dic_berth['ships_scheduled'][0].append(aux_current_berth['ships_scheduled'][contador-1])
         aux_actualized_dic_berth['arrival_time_berth'][0].append(aux_current_berth['arrival_time_berth'][contador - 1])
-        aux_actualized_dic_berth['time_departure'][0].append(aux_current_berth['time_departure'][contador - 1])
+        #aux_actualized_dic_berth['time_departure'][0].append(aux_current_berth['time_departure'][contador - 1])
     else:
         aux_actualized_dic_berth['ships_scheduled'][1].append(aux_current_berth['ships_scheduled'][contador-1])
         aux_actualized_dic_berth['arrival_time_berth'][1].append(aux_current_berth['arrival_time_berth'][contador - 1])
-        aux_actualized_dic_berth['time_departure'][1].append(aux_current_berth['time_departure'][contador - 1])
+        #aux_actualized_dic_berth['time_departure'][1].append(aux_current_berth['time_departure'][contador - 1])
 
     actualized_dic_berth = copy.deepcopy(aux_actualized_dic_berth)
 

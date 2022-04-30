@@ -35,3 +35,5 @@ infinite                     :  99999
 large_ships                  :  []
 times_start_of_day           :  []
 times_large_ship_depart      :  []
+inital_position_reclaimers   :  [250, 750]
+velocity_reclaimeirs         :  [350, 350]

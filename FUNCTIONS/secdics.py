@@ -188,9 +188,13 @@ def fill_in_dic_reclaimer(parameter):
         'instance_name'                 : [], # input         # instance .txt file name
         'reclaimers'                    : [], # 'R'           # set of reclaimers (lista de str)
         'stockpiles_reclaimed'          : [], # -             # set of stockpiles reclaimed by reclaimer r (input/output)
+        'inital_position_reclaimers': [],
+        'velocity_reclaimeirs' : [],
         'reclaim_schedule'                      : [],
-        'space_of_reclaim_schedule'  : []
-                    }
+        'space_of_reclaim_schedule'  : [],
+        'final_position_reclaimers': []
+
+    }
 
     for k, v in dic_reclaimer.items():
         if k in parameter:

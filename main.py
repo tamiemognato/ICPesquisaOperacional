@@ -13,6 +13,8 @@ import glob
 
 #### import * ou import biblioteca sem o from
 #IMPORT FUNCTIONS
+from FUNCTIONS.Visual_Outputs import generate_visual_graphic_outputs
+
 sys.path.append('FUNCTIONS')
 
 
@@ -37,7 +39,7 @@ else:
         dic_instance = insert_inst_dic(file)             #LOADING THE INSTANCE IN A DICTIONARY
         print_inst_from_dic(dic_instance)               #GENERATING INSTANCES.TXT DATA OUTPUT OF THE RESPECTIVE DICTIONARIES
         print_dic_instance(dic_instance)
-        #print(dic_instance)
+        print(dic_instance)
 
         #def teste:
         #return variavel1, variavel2, variavel3
@@ -85,7 +87,7 @@ os.chdir("..") #INPUTRUN > GRANELTM
 
 ################## MAIN ALGORITHM GCA-ETA #################
 
-OutPut = ALGORITHM1(dic_ship,dic_instance,dic_berth,dic_stockpile,dic_pad,dic_load_point, dic_stacker_stream, dic_reclaimer)
+dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer = ALGORITHM1(dic_ship,dic_instance,dic_berth,dic_stockpile,dic_pad,dic_load_point, dic_stacker_stream, dic_reclaimer)
 #Dic_Ship, Dic_Berth, Dic_Pad, etc...)
 
 print("Agora do scrip principal:")
@@ -102,8 +104,7 @@ print('DIC_RECLAIMER: ', dic_reclaimer)
 
 print('\n----------------end-----------------')
 
-
-
+generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer)
 
 
 

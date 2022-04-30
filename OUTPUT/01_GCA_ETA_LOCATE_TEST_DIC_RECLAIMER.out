@@ -3,5 +3,8 @@ Dic_reclaimer
 instance_name         :  01_GCA_ETA_LOCATE_TEST.txt
 reclaimers            :  [0, 1]
 stockpiles_reclaimed  :  [[], []]
+inital_position_reclaimers  :  [250, 750]
+velocity_reclaimeirs  :  [350, 350]
 reclaim_schedule      :  [[], []]
 space_of_reclaim_schedule  :  [[], []]
+final_position_reclaimers  :  [[], []]

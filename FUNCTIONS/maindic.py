@@ -54,6 +54,8 @@ def insert_inst_dic(parameter):
     BufDisP = []
     DurRhh = []
     Prod_Stacker = []
+    HReclaimers = []
+    VReclaimers = []
 
     # UNIQUE INTS PARAMETERS - METHOD 5
     NumMxR = []
@@ -520,6 +522,24 @@ def insert_inst_dic(parameter):
                 Prod_Stacker.append(0)
                 Prod_Stacker[i] = int(listaux[i])
 
+        if contentkeep[maincount].startswith("HReclaimers "):
+            mainaux = contentkeep[maincount]
+            mainlistaux = mainaux.split(" = ")
+            aux = mainlistaux[1]
+            listaux = aux.split(", ")
+            for i in range(len(listaux)):
+                HReclaimers.append(0)
+                HReclaimers[i] = int(listaux[i])
+
+        if contentkeep[maincount].startswith("VReclaimers "):
+            mainaux = contentkeep[maincount]
+            mainlistaux = mainaux.split(" = ")
+            aux = mainlistaux[1]
+            listaux = aux.split(", ")
+            for i in range(len(listaux)):
+                VReclaimers.append(0)
+                VReclaimers[i] = int(listaux[i])
+
 
 
 
@@ -580,6 +600,9 @@ def insert_inst_dic(parameter):
         'large_ships'                 : VL,                 # set of large ships (lista de str)
         'times_start_of_day'          : TD,                 # set of times representing the start of a day (int) - The parameter will be generated in Python
         'times_large_ship_depart'     : TL,                 # set of times at which a large ship can depart (float) - The parameter will be generated in Python
+
+        'inital_position_reclaimers'  : HReclaimers,
+        'velocity_reclaimeirs'        : VReclaimers
                     }
 
     return dic_instance

@@ -1,3 +1,4 @@
+import math
 
 def set_of_stockpiles_that_finish_being_reclaimed_by_r_after_early_time(r, early_time, dic_reclaimer, dic_stockpile):
     list_of_s_finish_reclaim_by_r_after_early_time = []
@@ -99,8 +100,21 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
 
     #LISTA VAZIA
     if len(S) == 0:
-        #reclaim_schedule = (early_time, early_time + dic_stockpile['time_reclaim_stockpile'][s])
-        interval_a_b = (early_time, dic_instance['infinite'])    #linha 7 para lista n vazia
+        #Calculando o tempo de deslocamento de r até s:
+        if len(dic_reclaimer['stockpiles_reclaimed'][r]) == 0:   #se não tem nenhuma stockpile programada para r, então ele está na sua posição inicial
+            dur_mov_r_s = math.ceil(abs(dic_reclaimer['inital_position_reclaimers'][r] - dic_stockpile['position_pad'][s]) / dic_reclaimer['velocity_reclaimeirs'][r])  #a duração de mov de h para h' é = |pos_r - pos_s_atual | / vel_r arredondado para cima para o prox inteiro
+            #print(dic_reclaimer['inital_position_reclaimers'][r])
+            #print(dic_stockpile['position_pad'][s])
+            #print(abs(dic_reclaimer['inital_position_reclaimers'][r] - dic_stockpile['position_pad'][s]))
+            #print('LINE G105 DUR_MOV_R_S: ', dur_mov_r_s)
+            #dur_mov_r_s = 2
+        else: #Se S está vazia, mas já teve alguma pilha para r, então a sua posição vai ser a posição final da última pilha que ele recuperou
+            dur_mov_r_s = math.ceil(abs(dic_reclaimer['space_of_reclaim_schedule'][r][-1][1] - dic_stockpile['position_pad'][s]) / dic_reclaimer['velocity_reclaimeirs'][r]) #mesmo raciocnio, mas com a posição da última pilha recuperada.
+            #dur_mov_r_s = 2
+
+
+
+        interval_a_b = (early_time + dur_mov_r_s, dic_instance['infinite'])    #linha 7 para lista n vazia
         #print('LINE G103 Reclaim_schedule lista vazia: ', interval_a_b)
 
         #INSERIR TESTES DE COLISÃO, QNT R MAX - vou precisar de b definido, não 999
@@ -110,12 +124,13 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
 
         return interval_a_b
 
-    #LISTA NÃO VAZIA
+    #LISTA NÃO VAZIA - linha 3
     else:
         #print('LINE G112 S != []')
         if dic_stockpile['time_rec_start'][S[0]]<= early_time:
             #print('LINE G114 dic_stockpile[time_rec_start][S[0]]<= early_time: ', dic_stockpile['time_rec_start'][S[0]], ' <= ', early_time)
-            early_time = dic_stockpile['time_rec_finish'][S[0]] + dic_instance['time_reclaimer_moves'][r]
+            dur_mov_r_s = math.ceil(abs(dic_stockpile['position_pad'][S[0]] + dic_stockpile['length_stockpile'][S[0]] - dic_stockpile['position_pad'][s]) / dic_reclaimer['velocity_reclaimeirs'][r])
+            early_time = dic_stockpile['time_rec_finish'][S[0]] + dur_mov_r_s
             #print('LINE G116 EARLY_TIME: ', early_time)
             S = S[1:]
             #print('LINE G118 S: ', S)
@@ -124,19 +139,21 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
         #print('LINE G121 INTERVAL_A_B: ', interval_a_b)
 
         if S != []:
-            print('LINE G124 S != []')
+            #print('LINE G124 S != []')
 
             #NESSA INSTÂNCIA, NÃO DEVERIA SER PRECISO PASSAR POR ESSE IF
-            # i = 0
-            # tuples_list = []
-            # aux_list = []
-            # while i < len(S):
-            #     if i > 1:
-            #         a = dic_stockpile['time_rec_finish'][S[i-1]] + dic_instance['time_reclaimer_moves'][r]
-            #         interval_a_b[0] = a
-            #
-            #     b = dic_stockpile['time_rec_start'][S[i]] - dic_reclaimer['time_reclaimer_moves'][r]
-            #
+            i = 0
+            tuples_list = []
+            aux_list = []
+            while i < len(S):
+                if i > 1:
+                    dur_mov_r_s = math.ceil(abs(dic_stockpile['position_pad'][S[i-1]] + dic_stockpile['length_stockpile'][S[i-1]] - dic_stockpile['position_pad'][s]) / dic_reclaimer['velocity_reclaimeirs'][r])
+                    a = dic_stockpile['time_rec_finish'][S[i-1]] + dur_mov_r_s
+                    interval_a_b[0] = a
+
+                dur_mov_r_s = math.ceil(abs(dic_stockpile['position_pad'][S[i]] + dic_stockpile['length_stockpile'][S[i]] - dic_stockpile['position_pad'][s]) / dic_reclaimer['velocity_reclaimeirs'][r])
+                b = dic_stockpile['time_rec_start'][S[i]] - dur_mov_r_s
+
             #     if dic_stockpile['time_reclaim_stockpile'][s] <= (b - a):
             #         we_can_reclaim_s_with_r_in_ab = reclaim_s_using_r_during_ab_avoiding_clashes_respecting_nummxr(dic_reclaimer, dic_instance, a, b, r, R_s_s_p, s, dic_stockpile)
             #         if we_can_reclaim_s_with_r_in_ab == True:
@@ -209,8 +226,8 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
                 while count < len(dic_reclaimer['reclaim_schedule'][rec]):  # com esse while vou passar por todos os gaps de tempo e espaço do respectivo rec
                     test_a = a in range(dic_reclaimer['reclaim_schedule'][rec][count][0], dic_reclaimer['reclaim_schedule'][rec][count][1])  # a está entre a' e b'?
                     test_b = b in range(dic_reclaimer['reclaim_schedule'][rec][count][0], dic_reclaimer['reclaim_schedule'][rec][count][1])  # b está entre a' e b'?
-                    # print(dic_reclaimer['reclaim_schedule'][rec][count][0], dic_reclaimer['reclaim_schedule'][rec][count][1])
-                    # print(test_a, test_b)
+                    #print(dic_reclaimer['reclaim_schedule'][rec][count][0], dic_reclaimer['reclaim_schedule'][rec][count][1])
+                    #print(test_a, test_b)
                     if test_a == True or test_b == True:  #se true para algum, então terá +1 rec em uso no gap de tempo
                         n_max += 1  #somo mais um
                     count += 1
@@ -223,11 +240,11 @@ def GET_RECLAIM_TIME(s, r, early_time, dic_stockpile, dic_reclaimer,dic_instance
             #### RETORNANDO ####
 
             if var == True:
-                #print('VAR TRUE, int a_b: ', interval_a_b)
+               # print('VAR TRUE, int a_b: ', interval_a_b)
                 return interval_a_b
             else:
                 interval_a_b[0] = dic_instance['infinite']  #se n for possivel usar o gap ab, então retorno a como infinito, pois não passará na linha 10 do proc 3
-                #print('VAR FALSE, int a_b: ', interval_a_b)
+               # print('VAR FALSE, int a_b: ', interval_a_b)
                 return interval_a_b
 
 

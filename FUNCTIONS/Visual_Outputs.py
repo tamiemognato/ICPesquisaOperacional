@@ -26,7 +26,12 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         while count < len(dic_berth['ships_scheduled'][b]): #dar o laço para o número de dados nas listas dos respectivos berços
 
             dic_aux = {}
-            dic_aux = dict(berths = dic_berth['berths'][b], ships_scheduled = dic_berth['ships_scheduled'][b][count], arrival_time_berth = dic_berth['arrival_time_berth'][b][count], time_departure = dic_berth['time_departure'][b][count])
+            dic_aux = dict(berths = dic_berth['berths'][b],
+                           ships_scheduled = dic_berth['ships_scheduled'][b][count],
+                           arrival_time_berth = dic_berth['arrival_time_berth'][b][count],
+                           time_departure = dic_berth['time_departure'][b][count],
+                           ships_legend = (dic_berth['arrival_time_berth'][b][count] + dic_berth['time_departure'][b][count] ) / 2
+                           )
 
             lista_dic_berth.append(dic_aux)
 
@@ -43,15 +48,17 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     graph_berths = (
         ggplot(data = df_b)
-        + geom_segment(aes(x='arrival_time_berth', y='berths', xend='time_departure', yend='berths'))
-        + aes(size = 10, color = "ships_scheduled")
-        + geom_label(aes(label = "arrival_time_berth",  x = "arrival_time_berth", y = "berths", size = 10))
-        + geom_label(aes(label="time_departure", x="time_departure", y="berths", size=10))
-        + labs(title = 'Berths schedule', x = "Time", y = 'Berths')
+        + geom_segment(aes(x='arrival_time_berth', y='berths', xend='time_departure', yend='berths', size = 10, color = "ships_scheduled")) + scale_colour_desaturate() #gradient, desaturate
+        + geom_label(aes(label = "arrival_time_berth",  x = "arrival_time_berth", y = "berths", size = 10, color = "ships_scheduled"))
+        + geom_label(aes(label="time_departure", x="time_departure", y="berths", size=10, color = "ships_scheduled"))
+        + geom_label(aes(label="ships_scheduled", x="ships_legend", y="berths", size=10))
+        + ggtitle(title = 'Berths Schedule')
+        + labs(caption = 'oi', x = "Time", y = 'Berths')
+        + theme_matplotlib() + theme(legend_position = 'none') #matplotlib, classic
 
-        )
+    )
 
-    #print(graph_berths)
+    print(graph_berths)
 
     ###############################################   RECLAIMERES   ####################################################
     lista_dic_reclaimer = []
@@ -78,12 +85,12 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
     graph_reclaimers = (
         ggplot(data = df_r)
         + geom_segment(aes(x='reclaim_start', y='reclaimers', xend='reclaim_finish', yend='reclaimers'))
-        + aes(size = 10, color = "stockpiles_reclaimed")
+        + aes(size = 10, color = "stockpiles_reclaimed") + scale_colour_desaturate() #gradient, desaturate
         + geom_label(aes(label = "reclaim_start",  x = "reclaim_start", y = "reclaimers", size = 10))
         + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
         + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
         )
-    #print(graph_reclaimers)
+    print(graph_reclaimers)
 
     ###############################################   STACKERS   #######################################################
 
@@ -110,7 +117,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         ggplot(data = df_stk)
         +geom_bar(aes(x = 't_scheduled_stacking', y = 'res_cap_hours_stacker', fill = 'stacker_streams'), stat = 'identity', width = 5, position=position_dodge2(preserve = "single"))
         #+geom_point(aes(x = 't_scheduled_stacking', y = 'res_cap_hours_stacker'))
-        +geom_label(aes(label = 'res_cap_hours_stacker', x = 't_scheduled_stacking', y = 'res_cap_hours_stacker', color = 'stacker_streams', size = 10))
+        +geom_label(aes(label = 'res_cap_hours_stacker', x = 't_scheduled_stacking', y = 'res_cap_hours_stacker', color = 'stacker_streams', size = 10))  + scale_colour_desaturate() #gradient, desaturate
 
         +theme(axis_text_x= element_text(angle =90, vjust = 1))
         +xlab('t_scheduled_stacking')
@@ -129,7 +136,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         # + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
         ) #mostrar todos os valores no eixo x
 
-    #print(graph_stackers)
+    print(graph_stackers)
 
     ##############################################    STOCKPILES, PADS    ##############################################
     lista_dic_stockpile_pad_0 = []
@@ -171,7 +178,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
     graph_stockpiles_pad_0 = (
         ggplot(data = df_s_pad_0)
 
-        + geom_rect(aes(xmin = "time_build_start", xmax = "time_rec_finish", ymin = "position_pad_start", ymax = "position_pad_finish", fill = "stockpiles"))
+        + geom_rect(aes(xmin = "time_build_start", xmax = "time_rec_finish", ymin = "position_pad_start", ymax = "position_pad_finish", fill = "stockpiles"))  + scale_colour_desaturate() #gradient, desaturate
         + labs(title = "PAD 0", x = "Time", y = "Pad occupation")
         + scale_fill_continuous(guide = guide_legend())
         + geom_label(aes(label = "stockpiles",  x = "stockpile_label_x", y = "stockpile_label_y", size = 15, color = "stockpiles" ))
@@ -183,7 +190,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    #print(graph_stockpiles_pad_0)
+    print(graph_stockpiles_pad_0)
 
     graph_stockpiles_pad_1 = (
         ggplot(data = df_s_pad_1)
@@ -198,7 +205,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         + geom_label(aes(label="time_rec_finish", x="time_rec_finish", y="stockpile_label_y", size=15, color="stockpiles"))
         + geom_label(aes(label="position_pad_start", x="time_build_start", y="position_pad_start", size=15))
     )
-    #print(graph_stockpiles_pad_1)
+    print(graph_stockpiles_pad_1)
 
     ##############################################    LOAD POINTS    #################################################
     list_dic_load_point_0 = []
@@ -225,10 +232,10 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
             count += 1
 
     df_lp0 = pd.DataFrame(list_dic_load_point_0)
-    print(df_lp0)
+    #print(df_lp0)
 
     df_lp1 = pd.DataFrame(list_dic_load_point_1)
-    print(df_lp1)
+    #print(df_lp1)
 
     # (stockpile, nº mov, load point, k em serviço, tempo)
     # (0            1       2               3           4)
@@ -243,7 +250,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    #print(graph_n_lp0_s)
+    print(graph_n_lp0_s)
 
     graph_n_lp1_s = (
         ggplot(data = df_lp1)
@@ -253,19 +260,19 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    #print(graph_n_lp1_s)
+    print(graph_n_lp1_s)
 
 
 
 
-    os.chdir("OUTPUT")
-    ggsave(plot=graph_berths, filename='berths_schedule')
-    ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
-    ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
-    ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
-    ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
-    ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
-    ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
+    # os.chdir("OUTPUT")
+    # ggsave(plot=graph_berths, filename='berths_schedule')
+    # ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
+    # ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
+    # ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
+    # ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
+    # ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
+    # ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
 
 
 
