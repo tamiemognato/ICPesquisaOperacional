@@ -53,9 +53,10 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         + geom_label(aes(label="time_departure", x="time_departure", y="berths", size=10, color = "ships_scheduled"))
         + geom_label(aes(label="ships_scheduled", x="ships_legend", y="berths", size=10))
         + ggtitle(title = 'Berths Schedule')
-        + labs(caption = 'oi', x = "Time", y = 'Berths')
+        + labs(x = "Time", y = 'Berths')
         + theme_matplotlib() + theme(legend_position = 'none') #matplotlib, classic
-
+        + scale_y_continuous(breaks = (0, 100, 1))
+        #+ scale_x_continuous(breaks = (0, 500, 50))
     )
 
     print(graph_berths)
@@ -89,7 +90,11 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         + geom_label(aes(label = "reclaim_start",  x = "reclaim_start", y = "reclaimers", size = 10))
         + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=10))
         + labs(title = 'Reclaimers schedule', x = "Time", y = 'Reclaimers')
-        )
+        + theme_matplotlib() + theme(legend_position='none')  # matplotlib, classic
+        + scale_y_continuous(breaks=(0, 100, 1))
+        #+ scale_x_continuous(breaks = (100, 500, 25))
+
+    )
     print(graph_reclaimers)
 
     ###############################################   STACKERS   #######################################################
@@ -265,14 +270,14 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
 
 
-    # os.chdir("OUTPUT")
-    # ggsave(plot=graph_berths, filename='berths_schedule')
-    # ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
-    # ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
-    # ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
-    # ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
-    # ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
-    # ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
+    os.chdir("OUTPUT")
+    ggsave(plot=graph_berths, filename='berths_schedule')
+    ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
+    ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
+    ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
+    ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
+    ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
+    ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
 
 
 
