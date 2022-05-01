@@ -287,14 +287,14 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
 
 
-    # os.chdir("OUTPUT")
-    # ggsave(plot=graph_berths, filename='berths_schedule')
-    # ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
-    # ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
-    # ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
-    # ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
-    # ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
-    # ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
+    os.chdir("OUTPUT")
+    ggsave(plot=graph_berths, filename='berths_schedule')
+    ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
+    ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
+    ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
+    ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
+    ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
+    ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
 
 
 
