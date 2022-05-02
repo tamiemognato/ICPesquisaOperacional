@@ -1,0 +1,2 @@
+instance_name,ships,eta_ship,total_stockpiles_ship,order_stockpiles_ship,nomination_ship,berth_assigned,arrival_time_berth,time_departure,time_rec_last_stockpile
+01_GCA_ETA_LOCATE_TEST.txt,"[0, 1, 2]","[300, 282, 374]","[1, 1, 2]","[[0], [1], [2, 3]]","[32, 14, 24]","[1, 0, 0]","[300, 282, 374]","[377, 303, 476]","[376, 302, 475]"

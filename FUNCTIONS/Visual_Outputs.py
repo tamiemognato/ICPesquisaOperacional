@@ -60,7 +60,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         #+ scale_x_continuous(breaks = (0, 500, 50))
     )
 
-    print(graph_berths)
+    # print(graph_berths)
 
     ###############################################   RECLAIMERES   ####################################################
     lista_dic_reclaimer = []
@@ -103,7 +103,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         #+ scale_x_continuous(breaks = (100, 500, 25))
 
     )
-    print(graph_reclaimers)
+    # print(graph_reclaimers)
 
     ###############################################   STACKERS   #######################################################
 
@@ -139,7 +139,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    print(graph_stackers)
+    # print(graph_stackers)
 
     ##############################################    STOCKPILES, PADS    ##############################################
     lista_dic_stockpile_pad_0 = []
@@ -195,7 +195,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    print(graph_stockpiles_pad_0)
+    # print(graph_stockpiles_pad_0)
 
     graph_stockpiles_pad_1 = (
         ggplot(data = df_s_pad_1)
@@ -211,7 +211,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         + theme_matplotlib() + theme(legend_position='none')
 
     )
-    print(graph_stockpiles_pad_1)
+    # print(graph_stockpiles_pad_1)
 
     ##############################################    LOAD POINTS    #################################################
     list_dic_load_point_0 = []
@@ -272,7 +272,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    print(graph_n_lp0_s)
+    # print(graph_n_lp0_s)
 
     graph_n_lp1_s = (
         ggplot(data = df_lp1)
@@ -282,19 +282,19 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     )
 
-    print(graph_n_lp1_s)
+    # print(graph_n_lp1_s)
 
 
 
 
-    os.chdir("OUTPUT")
-    ggsave(plot=graph_berths, filename='berths_schedule')
-    ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
-    ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
-    ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
-    ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
-    ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
-    ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
+    # os.chdir("OUTPUT")
+    # ggsave(plot=graph_berths, filename='berths_schedule')
+    # ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
+    # ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
+    # ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
+    # ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
+    # ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
+    # ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
 
 
 

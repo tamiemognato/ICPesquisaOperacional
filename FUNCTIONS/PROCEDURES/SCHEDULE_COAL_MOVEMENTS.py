@@ -71,7 +71,7 @@ def SCHEDULE_COAL_MOVEMENTS(dic_load_point, current_stockpile, dic_stacker_strea
 
             #STACKER STREAM#
             #testanto se k já está atribuido para empilhar alguma pilha no pad - desconsiderando se os stackers vão bater a principio
-            #vou usar a politica de atribuir o stacker que tem mais horas disponíveis, assim se k1 tem 0 horas usaremos k2 nem que sejam com 1 hora
+            #vou usar a politica de atribuir o stacker que tem mais horas disponíveis, assim se k0 tem 0 horas usaremos k1 nem que sejam com 1 hora
             res_dur_list = []                                                                                           #lista de capacidades dos k's que servem ao pad
             for j in lista_stacker_stream_que_pode_servir_s_no_pad:
                 if t in dic_stacker_stream['t_scheduled_stacking'][j]:                                                  #já tem algo programado para k aqui?

@@ -13,6 +13,7 @@ import glob
 
 #### import * ou import biblioteca sem o from
 #IMPORT FUNCTIONS
+from FUNCTIONS.CSV_Outputs import generate_csv_outputs
 from FUNCTIONS.Visual_Outputs import generate_visual_graphic_outputs
 
 sys.path.append('FUNCTIONS')
@@ -105,6 +106,7 @@ print('DIC_RECLAIMER: ', dic_reclaimer)
 print('\n----------------end-----------------')
 
 generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer)
+generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer)
 
 
 
