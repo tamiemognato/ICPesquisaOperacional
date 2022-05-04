@@ -47,9 +47,19 @@
 # print(graph)
 #
 # print("\nfim")
+import operator
 
+stats = {'key1':[20,40], 'key2':[35,10000], 'key3': [2,1,3]}
+# max_key = max(stats, key = stats.get)
+# print(max_key)
+#print(stats)
 
+lista_aux = print(stats.keys())
+#print(lista_aux[1])
 
+for fruta in stats.keys():
+    print(fruta)
+#
 
 import plotly.express as px
 import pandas as pd
@@ -67,10 +77,10 @@ from plotly.offline import plot
 # #fig.update_yaxes(autorange="reversed") # otherwise tasks are listed from the bottom up
 # #plot(fig)
 
-number = -20
-
-absolute_number = abs(number)
-print(absolute_number)
-
-listateste = [20, 30, 40]
-print(listateste[-1])
+# number = -20
+#
+# absolute_number = abs(number)
+# print(absolute_number)
+#
+# listateste = [20, 30, 40]
+# print(listateste[-1])
