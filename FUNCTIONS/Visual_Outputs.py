@@ -73,8 +73,12 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
                            stockpiles_reclaimed = dic_reclaimer['stockpiles_reclaimed'][r][count],
                            reclaim_start = dic_reclaimer['reclaim_schedule'][r][count][0],
                            reclaim_finish = dic_reclaimer['reclaim_schedule'][r][count][1],
-                           stockpiles_reclaimed_legend = (dic_reclaimer['reclaim_schedule'][r][count][0]
-                                                +dic_reclaimer['reclaim_schedule'][r][count][1]) /2
+                           reclaim_start_position=dic_reclaimer['space_of_reclaim_schedule'][r][count][0],
+                           reclaim_finish_position=dic_reclaimer['space_of_reclaim_schedule'][r][count][1],
+                           stockpiles_reclaimed_times_legend = (dic_reclaimer['reclaim_schedule'][r][count][0]
+                                                +dic_reclaimer['reclaim_schedule'][r][count][1]) /2,
+                           stockpiles_reclaimed_positions_legend=(dic_reclaimer['space_of_reclaim_schedule'][r][count][0]
+                                                              + dic_reclaimer['space_of_reclaim_schedule'][r][count][1]) / 2
                            )
 
             lista_dic_reclaimer.append(dic_aux)
@@ -90,20 +94,36 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
     # Reclaimer used in reclaiming stockpile s + time at wich reclaiming pf stockpile s starts
     # + time at which reclaiming of stockpile s finishes
 
-    graph_reclaimers = (
+    graph_reclaimers_times = (
         ggplot(data = df_r)
         + geom_segment(aes(x='reclaim_start', y='reclaimers', xend='reclaim_finish', yend='reclaimers', size = 50, color = "stockpiles_reclaimed"))
         + scale_colour_desaturate() #gradient, desaturate
         + geom_label(aes(label = "reclaim_start",  x = "reclaim_start", y = "reclaimers", size = 50, color = "stockpiles_reclaimed"))
         + geom_label(aes(label="reclaim_finish", x="reclaim_finish", y="reclaimers", size=50, color = "stockpiles_reclaimed"))
-        + geom_label(aes(label="stockpiles_reclaimed", x = "stockpiles_reclaimed_legend", y="reclaimers", size=50 ))
-        + labs(title = 'Reclaimers schedule - Stockpiles reclaimed', x = "Time", y = 'Reclaimers')
+        + geom_label(aes(label="stockpiles_reclaimed", x = "stockpiles_reclaimed_times_legend", y="reclaimers", size=50 ))
+        + labs(title = 'Reclaimers schedule time - Stockpiles reclaimed', x = "Time", y = 'Reclaimers')
         + theme_matplotlib() + theme(legend_position='none')  # matplotlib, classic
         + scale_y_continuous(breaks=(0, 100, 1))
         #+ scale_x_continuous(breaks = (100, 500, 25))
 
     )
-    # print(graph_reclaimers)
+    # print(graph_reclaimers_times)
+
+    graph_reclaimers_positions = (
+            ggplot(data=df_r)
+            + geom_segment(aes(x='reclaim_start_position', y='reclaimers', xend='reclaim_finish_position', yend='reclaimers', size=50,
+                               color="stockpiles_reclaimed"))
+            + scale_colour_desaturate()  # gradient, desaturate
+            + geom_label(aes(label="reclaim_start_position", x="reclaim_start_position", y="reclaimers", size=50, color="stockpiles_reclaimed"))
+            + geom_label( aes(label="reclaim_finish_position", x="reclaim_finish_position", y="reclaimers", size=50, color="stockpiles_reclaimed"))
+            + geom_label(aes(label="stockpiles_reclaimed", x="stockpiles_reclaimed_positions_legend", y="reclaimers", size=50))
+            + labs(title='Reclaimers schedule position - Stockpiles reclaimed', x="Position", y='Reclaimers')
+            + theme_matplotlib() + theme(legend_position='none')  # matplotlib, classic
+            + scale_y_continuous(breaks=(0, 100, 1))
+
+
+    )
+    # print(graph_reclaimers_positions)
 
     ###############################################   STACKERS   #######################################################
 
@@ -277,7 +297,8 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     os.chdir("OUTPUT")
     ggsave(plot=graph_berths, filename = dic_berth['instance_name'][:-4] + '_berths_schedule')
-    ggsave(plot=graph_reclaimers, filename = dic_reclaimer['instance_name'][:-4] + '_reclaimers_schedule')
+    ggsave(plot=graph_reclaimers_times, filename = dic_reclaimer['instance_name'][:-4] + '_reclaimers_schedule_times')
+    ggsave(plot=graph_reclaimers_positions, filename = dic_reclaimer['instance_name'][:-4] + '_reclaimers_schedule_positions')
     ggsave(plot=graph_stockpiles_pad_0, filename = dic_pad['instance_name'][:-4] + '_pad_0_schedule')
     ggsave(plot=graph_stockpiles_pad_1, filename = dic_pad['instance_name'][:-4] + '_pad_1_schedule')
     ggsave(plot=graph_stackers, filename = dic_stacker_stream['instance_name'][:-4] + '_stackers_usage_and_remaining_capacity')
