@@ -73,7 +73,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_b = pd.DataFrame(lista_dic_berth)
-    print(df_b)
+    #print(df_b)
 
     #DIC_SHIP
     lista_dic_ship = []
@@ -98,7 +98,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
 
 
     df_sp = pd.DataFrame(lista_dic_ship)
-    print(df_sp)
+    #print(df_sp)
 
     #DIC_STOCKPILE
     lista_dic_stockpile = []
@@ -126,7 +126,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_s = pd.DataFrame(lista_dic_stockpile)
-    print(df_s)
+    #print(df_s)
 
 
     #DIC_PAD
@@ -152,7 +152,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_p = pd.DataFrame(lista_dic_pad)
-    print(df_p)
+    #print(df_p)
 
     #DIC_LOAD_POINT
     list_dic_load_point = []
@@ -176,7 +176,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_lp = pd.DataFrame(list_dic_load_point)
-    print(df_lp)
+    #print(df_lp)
 
 
 
@@ -198,7 +198,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_ss = pd.DataFrame(list_dic_stacker_stream)
-    print(df_ss)
+    #print(df_ss)
 
 
 
@@ -221,7 +221,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
             count += 1
 
     df_r = pd.DataFrame(list_dic_reclaimer)
-    print(df_r)
+    #print(df_r)
 
 
 
@@ -241,7 +241,7 @@ def generate_csv_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_p
     # # Fecha o ExcelWriter e gera o arquivo .xlsx
     # writer.save()
 
-    os.chdir("OUTPUT")
+    #os.chdir("OUTPUT")
 
     writer = pd.ExcelWriter(dic_ship['instance_name'][:-4] + '.xlsx', engine='xlsxwriter')
 

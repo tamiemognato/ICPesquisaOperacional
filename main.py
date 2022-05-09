@@ -48,35 +48,35 @@ else:
         # dic_instance, dic_ship, dic_stockpile = funcao teste
 
         dic_ship = fill_in_dic_ship(dic_instance)
-        print_dic_ship(dic_ship)
+        #print_dic_ship(dic_ship)
         #print(dic_ship)
 
         dic_stockpile = fill_in_dic_stockpile(dic_instance)
-        print_dic_stockpile(dic_stockpile)
+        #print_dic_stockpile(dic_stockpile)
         #print(dic_stockpile)
 
         dic_berth = fill_in_dic_berth(dic_instance)
-        print_dic_berth(dic_berth)
+        #print_dic_berth(dic_berth)
         #print(dic_berth)
 
         dic_pad = fill_in_dic_pad(dic_instance)
-        print_dic_pad(dic_pad)
+        #print_dic_pad(dic_pad)
         #print(dic_pad)
 
         dic_stacker_stream = fill_in_dic_stacker_stream(dic_instance)
-        print_dic_stacker_stream(dic_stacker_stream)
+        #print_dic_stacker_stream(dic_stacker_stream)
         #print(dic_stacker_stream)
 
         dic_load_point = fill_in_dic_load_point(dic_instance)
-        print_dic_load_point(dic_load_point)
+        #print_dic_load_point(dic_load_point)
         #print(dic_load_point)
 
         dic_reclaimer = fill_in_dic_reclaimer(dic_instance)
-        print_dic_reclaimer(dic_reclaimer)
+        #print_dic_reclaimer(dic_reclaimer)
         #print(dic_reclaimer)
 
         dic_time = fill_in_dic_time(dic_instance)
-        print_dic_time(dic_time)
+        #print_dic_time(dic_time)
         #print(dic_time)
 
 
@@ -91,7 +91,7 @@ os.chdir("..") #INPUTRUN > GRANELTM
 dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer = ALGORITHM1(dic_ship,dic_instance,dic_berth,dic_stockpile,dic_pad,dic_load_point, dic_stacker_stream, dic_reclaimer)
 #Dic_Ship, Dic_Berth, Dic_Pad, etc...)
 
-print("Agora do scrip principal:")
+# print("Agora do scrip principal:")
 
 print('-------DICIONARIOS ATUALIZADOS--------\n')
 

@@ -13,7 +13,7 @@ from plotnine import *
 def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad, dic_load_point, dic_stacker_stream, dic_reclaimer):
     #função com entrada de dicionários com listas e saída de uma lista com vários dicionários
     #aplicando ao dic_berth primeiramente
-    #ENTRADA - DIC_BERTH: {'instance_name': '01_GCA_ETA_LOCATE_TEST.txt', 'berths': [0, 1], 'ships_scheduled': [[1, 2], [0]],
+    #ENTRADA - DIC_BERTH: {'instance_name': '00.txt', 'berths': [0, 1], 'ships_scheduled': [[1, 2], [0]],
                 #'arrival_time_berth': [[282, 374], [300]], 'time_departure': [[303, 404], [374]]}
     #SAÍDA - lista_dic_berth = [{'berths' : 0 , 'ships_scheduled' : 1 ...},
                             #   {'berths' : 0 , 'ships_scheduled' : 2 ...},
@@ -252,23 +252,9 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
             ggplot(data = df_lp0)
             + geom_point(aes(x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov' )) + scale_colour_desaturate()  # gradient, desaturate
             + geom_label(aes(label = 'time_n_coalmov', x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov', size = 15)) + scale_colour_desaturate()
+            + labs(title="Load Point 0 - Coal movements from LP1 / stockpile", x="Time", y="Number of coal movements")
             + facet_wrap('stockpile_n_coalmov')
-
-        #     + geom_bar(aes(x='t_scheduled_stacking', y='res_cap_hours_stacker'), stat='identity', width=5,
-        #            position=position_dodge2(preserve="single")) + scale_colour_desaturate()  # gradient, desaturate
-        #     + geom_label(
-        # aes(label='res_cap_hours_stacker', x='t_scheduled_stacking', y='res_cap_hours_stacker', color='stacker_streams',
-        #     size=10)) + scale_colour_desaturate()  # gradient, desaturate
-        #     + facet_wrap('stacker_streams', ncol=4)
-        #     + geom_label(
-        # aes(label='t_scheduled_stacking', x='t_scheduled_stacking', y=10.0, color='stacker_streams', size=10))
-        #     + geom_label(
-        # aes(label='stockpiles_pad_serviced', x='t_scheduled_stacking', y=9.5, color='stacker_streams', size=10))
-        #     + labs(title='Residual capacity of Stackers - Stockpiles that consumed hours', x="Time",
-        #        y='Residual capacity of Stackers')
-        #     + theme_matplotlib() + theme(legend_position='none', axis_text_x=element_text(angle=90, vjust=1),
-        #                              subplots_adjust={'wspace': 0.25})  # matplotlib, classic
-        #     + scale_y_continuous(limits=(0, 10))
+            + theme_matplotlib() + theme(legend_position='none')
 
     )
 
@@ -276,9 +262,11 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
     graph_n_lp1_s = (
         ggplot(data = df_lp1)
-        +geom_point(aes(x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov' ))
-        +geom_label(aes(label = 'time_n_coalmov', x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov', size = 15))
+        +geom_point(aes(x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov' )) + scale_colour_desaturate()
+        +geom_label(aes(label = 'time_n_coalmov', x ="time_n_coalmov", y ="n_coalmov", color = 'stockpile_n_coalmov', size = 15)) + scale_colour_desaturate()
+        + labs(title="Load Point 1 - Coal movements from LP1 / stockpile", x="Time", y="Number of coal movements")
         + facet_wrap('stockpile_n_coalmov')
+        + theme_matplotlib() + theme(legend_position='none')
 
     )
 
@@ -287,14 +275,14 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
 
 
 
-    # os.chdir("OUTPUT")
-    # ggsave(plot=graph_berths, filename='berths_schedule')
-    # ggsave(plot=graph_reclaimers, filename='reclaimers_schedule')
-    # ggsave(plot=graph_stockpiles_pad_0, filename='pad_0_schedule')
-    # ggsave(plot=graph_stockpiles_pad_1, filename='pad_1_schedule')
-    # ggsave(plot=graph_stackers, filename='stackers_usage_and_remaining_capacity')
-    # ggsave(plot=graph_n_lp0_s, filename='movements_lp0_for_stockpiles')
-    # ggsave(plot=graph_n_lp1_s, filename='movements_lp1_for_stockpiles')
+    os.chdir("OUTPUT")
+    ggsave(plot=graph_berths, filename = dic_berth['instance_name'][:-4] + '_berths_schedule')
+    ggsave(plot=graph_reclaimers, filename = dic_reclaimer['instance_name'][:-4] + '_reclaimers_schedule')
+    ggsave(plot=graph_stockpiles_pad_0, filename = dic_pad['instance_name'][:-4] + '_pad_0_schedule')
+    ggsave(plot=graph_stockpiles_pad_1, filename = dic_pad['instance_name'][:-4] + '_pad_1_schedule')
+    ggsave(plot=graph_stackers, filename = dic_stacker_stream['instance_name'][:-4] + '_stackers_usage_and_remaining_capacity')
+    ggsave(plot=graph_n_lp0_s, filename = dic_load_point['instance_name'][:-4] + '_movements_lp0_for_stockpiles')
+    ggsave(plot=graph_n_lp1_s, filename = dic_load_point['instance_name'][:-4] + '_movements_lp1_for_stockpiles')
 
 
 

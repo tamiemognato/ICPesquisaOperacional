@@ -1,7 +1,0 @@
-Dic_berth
-
-instance_name    :  01_GCA_ETA_LOCATE_TEST.txt
-berths           :  [0, 1]
-ships_scheduled  :  [[], []]
-arrival_time_berth  :  [[], []]
-time_departure   :  [[], []]

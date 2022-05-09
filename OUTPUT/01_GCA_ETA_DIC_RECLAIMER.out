@@ -1,5 +1,0 @@
-Dic_reclaimer
-
-instance_name         :  01_GCA_ETA.txt
-reclaimers            :  [0, 1]
-stockpiles_reclaimed  :  [-1, -1]
