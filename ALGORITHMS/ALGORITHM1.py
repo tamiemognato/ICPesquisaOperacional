@@ -61,8 +61,6 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
     #print(V)
     #print(dic_ship['order_stockpiles_ship'])
     #print(S_sorted)
-    #dic_ship['time_departure'] = [374,303,404,397]                                                                      ##simulando tempos de partidas dos navios
-    #dic_ship['time_departure'] = [374,303,404]                                                                      ##simulando tempos de partidas dos navios
 
     for v in V:
         #print(v[0])
@@ -130,7 +128,7 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
             #     print('TESTE DIC LOAD POINT: ', dic_load_point)
 
             updated_dummy_dic_pad = LOCATE(dic_instance,dummy_dic_pad,current_stockpile,times_start_of_day,dic_load_point,dic_ship,v[0])
-            print('LINE 110 UPDATE_DUMMY_DIC_PAD:',updated_dummy_dic_pad)
+            #print('LINE 110 UPDATE_DUMMY_DIC_PAD:',updated_dummy_dic_pad)
 
             dic_pad = copy.deepcopy(updated_dummy_dic_pad)
             #print('LINE 113 DIC_PAD:', dic_pad)

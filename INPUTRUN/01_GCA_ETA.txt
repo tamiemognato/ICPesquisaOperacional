@@ -55,7 +55,7 @@ nv = 1, 1, 2, 1
 NomV = 32, 14, 24, 58
 
 #estimated time of arrival of ship v (lista de int)
-EtaV = 300, 282, 374, 375
+EtaV = 300, 282, 302, 375
 
 #amount of time that must elapse after ship v arrives at a berth before loading can begin (lista de int)
 BufAtlV = 1, 1, 1, 1
@@ -92,6 +92,12 @@ BufDisP = 10, 10
 
 #amount of time that elapses when reclaimer r moves from position h to position h' (lista de int)
 DurRhh = 2, 2
+
+#posição inicial dos reclaimers - depois pode ser variável de acordo com o tamanho dos pads - tratamento inicial
+HReclaimers = 250, 750
+
+#velocidade dos reclaimers
+VReclaimers = 350, 350
 
 #UNIQUE INTS PARAMETERS - FOLLOW THE WRITING TEMPLATE: #COMMENT + ENTER + PARAMETER = INTEGER NUMBER + ENTER
 
