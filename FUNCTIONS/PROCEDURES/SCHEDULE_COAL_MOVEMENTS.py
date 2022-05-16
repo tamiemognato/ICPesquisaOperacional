@@ -18,7 +18,6 @@ def most_to_least_total_tons_of_coal_from_l_to_s(current_stockpile):
         index += 1
 
     total_de_toneladas.sort(key=lambda x: x[1], reverse=1)
-
     return total_de_toneladas
 
 
@@ -36,7 +35,8 @@ def SCHEDULE_COAL_MOVEMENTS(dic_load_point, current_stockpile, dic_stacker_strea
 
     most_to_least_total_tons_lp_to_s = most_to_least_total_tons_of_coal_from_l_to_s(current_stockpile)                  #lista com tuplas dos load_points que s precisa de carregamento
     lista_stacker_stream_que_pode_servir_s_no_pad = dic_pad['stacker_streams_pad'][current_stockpile['pad_assembled']]  #lista de stackers que servem ao pad em que s ta
-
+    print("hello world")
+    print("CHECK: ", current_stockpile['pad_assembled']) #retorna -1 para a pilha 4 - problema no LOCATE !!!
     for i in most_to_least_total_tons_lp_to_s:                                                                          #para cada tupla de load point que s precisa de coal mov
 
         res_num = dic_load_point['total_mov_stockpile_lp'][current_stockpile['stockpiles']][i[0]]                       #informo o total de carregamento q s precisa

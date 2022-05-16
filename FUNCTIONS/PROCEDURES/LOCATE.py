@@ -17,11 +17,11 @@ def LOCATE(dic_instance,dummy_dic_pad,current_stockpile,times_start_of_day,dic_l
         dummy_dic_pad['time_rec_finish'][p].append(0)
         dummy_dic_pad['position_pad'][p].append((-1 * (current_stockpile['length_stockpile'] + dummy_dic_pad['distance_between_stockpiles'][p])))
         dummy_dic_pad['length_stockpile'][p].append(current_stockpile['length_stockpile'])
-        #print('LINE 20 DUMMY DIC PAD: ', dummy_dic_pad)
+        #print('LINE 20 DUMMY DIC PAD: ', dummy_dic_pad) - ATÉ AQUI OK
 
     # LINE 7 S' - função para gerar a lista que recebe o dummy_dic_pad com as pilhas reais e  as pilhas temporarias falsas, retorna (tempo final de rec, pad, dummy h, stockpile, comprimento)
     S_LINHA = list_of_real_and_dummy_stockpiles_already_located_in_the_stockyard(dummy_dic_pad)  ## !!!!!!!!!!!! CONFERIR SE ORDENA CERTO DPS Q COMEÇAR A SALVAR NO DIC PAD
-    #print('LINE 24 S_LINHA: ', S_LINHA)
+    #print('LINE 24 S_LINHA: ', S_LINHA) - time_rec_finish atualizado
 
     for s_linha in S_LINHA:
         t = s_linha[0]  # vamos considerar t igual ao tempo de fim de recuperação da pilha s_linha em questão

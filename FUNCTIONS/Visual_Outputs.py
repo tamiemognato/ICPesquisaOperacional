@@ -107,7 +107,7 @@ def generate_visual_graphic_outputs(dic_ship, dic_berth, dic_stockpile, dic_pad,
         #+ scale_x_continuous(breaks = (100, 500, 25))
 
     )
-    # print(graph_reclaimers_times)
+    print(graph_reclaimers_times)
 
     graph_reclaimers_positions = (
             ggplot(data=df_r)

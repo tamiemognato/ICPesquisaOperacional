@@ -111,24 +111,14 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
 
         for s in dic_ship['order_stockpiles_ship'][v[0]]:                                                               ##order stockpiles in S(v) by reclaiming sequence - feito no input de dados, avaliar se é necessário, pois resolvivel com a linha a seguir e as pilhas de cada navio já devem ser organizar no input
             dummy_dic_pad = copy.deepcopy(dic_pad)
-            #print('\nLINE 103 DUMMY DIC PAD: ', dummy_dic_pad)
+            print('\nLINE 103 DUMMY DIC PAD: ', dummy_dic_pad)
 
-            #print('LINE 105 stockpiles of v: ', s, ' e v: ', v[0])
+            print('LINE 105 stockpiles of v: ', s, ' e v: ', v[0])
             current_stockpile = select_current_entity(dic_stockpile, s)
             #print('LINE 107 current_stockpile: ', current_stockpile)
 
-            # if current_stockpile['stockpiles'] == 3:
-            #     dic_load_point['t_scheduled_coal_movement'][0].append(12)
-            #     dic_load_point['res_cap_coal_mov_lp'][0].append(0)
-            #     dic_load_point['res_cap_tonnage_l'][0].append(0)
-            #
-            #     dic_load_point['t_scheduled_coal_movement'][1].append(12)
-            #     dic_load_point['res_cap_coal_mov_lp'][1].append(0)
-            #     dic_load_point['res_cap_tonnage_l'][1].append(0)
-            #     print('TESTE DIC LOAD POINT: ', dic_load_point)
-
             updated_dummy_dic_pad = LOCATE(dic_instance,dummy_dic_pad,current_stockpile,times_start_of_day,dic_load_point,dic_ship,v[0])
-            #print('LINE 110 UPDATE_DUMMY_DIC_PAD:',updated_dummy_dic_pad)
+            print('LINE 110 UPDATE_DUMMY_DIC_PAD:',updated_dummy_dic_pad)
 
             dic_pad = copy.deepcopy(updated_dummy_dic_pad)
             #print('LINE 113 DIC_PAD:', dic_pad)
@@ -152,19 +142,13 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
             dic_stockpile = saving_value_in_principal_entity_dictionary(dic_stockpile,current_stockpile)                                   #Updating our main dictionary of ships with the new attributions
             #print('LINE 135 DIC STOCKPILE DEPOIS:', dic_stockpile)
 
-            #ATÉ AQUI AS PILHAS ESTÃO NOS RESPECTIVOS BERÇOS CORRETOS, NOS RESPECTIVOS PÁTIOS CORRETOS EM SUAS RESPECTIVAS POSIÇÕES CORRETAS E
-            #COM AS MOVIMENTAÇÕES DOS RESPECITVOS LOAD POINTS E ATENDIMENTO DOS RESPECITVOS STACKERS CORRETOS, TUDO NO TEMPO CORRETO
-
-            #ESTOU SEGUINDO COM A PROGRAMAÇÃO PARA VOLTAR NA QUESTÃO DO TEMPO APENAS NA HORA DE FAZER O DESLOCAMENTO PARA NÃO FICAR PRESA
-
-        # print("\n\n\nout of for s\n\n\n") #SAINDO DO FOR S
-        #
-        # print('DIC_SHIP_ATUALIZADO:', dic_ship)
-        # print('DIC_STOCKPILE_ATUALIZADO:', dic_stockpile)
-        # print('DIC_LOAD_POINT_ATUALIZADO:', dic_load_point)
-        # print('DIC_RECLAIMER: ', dic_reclaimer)
-        # print('DIC_PAD: ', dic_pad)
-        # print('CURRENT_SHIP: ', current_ship)
+            # #ATUALIZANDO O DIC_PAD COM O 'time_build_start'
+            # for s in dic_ship['order_stockpiles_ship'][v[0]]:  # para cada pilha do navio
+            #     for spl in dic_pad['stockpiles'][dic_stockpile['pad_assembled'][s]]:  # percorro a lista de pilhas no mesmo pad que s
+            #         if spl == s:  # se achar s
+            #             pos = dic_pad['stockpiles'][dic_stockpile['pad_assembled'][s]].index(spl)  # salvo sua posição
+            #             print(s, spl, pos)
+            #     dic_pad['time_build_start'][dic_stockpile['pad_assembled'][s]][pos] = dic_stockpile['time_build_start'][s]
 
         #print('########################################################################################################')
 
@@ -174,6 +158,15 @@ def ALGORITHM1(dic_ship, dic_instance, dic_berth, dic_stockpile, dic_pad, dic_lo
         #
         # print('\n **************** SET_RECLAIM_SCHEDULE **************** \n')
         proc3_em_teste = SET_RECLAIM_SCHEDULE(current_ship, dic_stockpile, dic_instance, dic_pad, dic_reclaimer, dic_ship)
+
+
+        #ATUALIZANDO O DIC_PAD COM O 'time_rec_finish'
+        for s in dic_ship['order_stockpiles_ship'][v[0]]:                                                               #para cada pilha do navio
+            for spl in dic_pad['stockpiles'][dic_stockpile['pad_assembled'][s]]:                                        #percorro a lista de pilhas no mesmo pad que s
+                if spl == s:                                                                                            #se achar s
+                    pos = dic_pad['stockpiles'][dic_stockpile['pad_assembled'][s]].index(spl)                           #salvo sua posição
+                    print(s, spl, pos)
+            dic_pad['time_rec_finish'][dic_stockpile['pad_assembled'][s]][pos] = dic_stockpile['time_rec_finish'][s]
 
         #LINHAS NAVIOS GRANDES
 
